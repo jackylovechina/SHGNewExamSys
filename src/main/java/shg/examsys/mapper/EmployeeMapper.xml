@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shg.examsys.mapper.EmployeeMapper">
+	<!-- resultMap映射 -->
+	<resultMap type="shg.examsys.entity.Employee" id="employeeRM">
+		<!-- 主键 -->
+		<id property="id" column="ID" jdbcType="BIGINT"/>
+		<!-- 一般属性 -->
+		<result property="role_id" column="Role_ID"/>
+		<result property="dep_id" column="Dep_ID"/>
+		<result property="name" column="Name"/>
+		<result property="number" column="Number"/>
+		<result property="sex" column="Sex"/>
+		<result property="password" column="Password"/>
+		<result property="salt" column="salt"/>
+	
+	</resultMap>
+	
+	<!-- 查询一个数据 -->
+	<select id="get" parameterType="long" resultMap="employeeRM">
+		SELECT * FROM EMPLOYEE 
+		WHERE ID=#{id}
+	</select>
+	<!-- 查询 -->
+	<select id="find" parameterType="map" resultMap="employeeRM">
+		SELECT * FROM EMPLOYEE
+		WHERE 1=1
+		<if test="name !=null" > and Name=#{name}</if>
+		<if test="number !=null"> and Number=#{number}</if>
+		<if test="sex !=null"> and Sex like #{sex}</if>
+		<if test="password !=null"> and Password=#{password}</if>
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="shg.examsys.entity.Employee">
+		INSERT INTO EMPLOYEE
+		(ROLE_ID,DEP_ID,NAME,NUMBER,SEX,PASSWORD,SALT)
+		VALUES
+		(	#{role_id,jdbcType=BIGINT},
+			#{dep_id,jdbcType=BIGINT},
+			#{name,jdbcType=VARCHAR},
+			#{number,jdbcType=VARCHAR},
+			#{sex,jdbcType=VARCHAR},
+			#{password,jdbcType=VARCHAR},
+			#{salt,jdbcType=VARCHAR}		
+		)
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="shg.examsys.entity.Employee">
+		UPDATE EMPLOYEE
+		<set>
+			<if test="password!=null">PASSWORD=#{password,jdbcType=VARCHAR},</if>
+			<if test="name!=null">NAME=#{name,jdbcType=VARCHAR},</if>
+			<if test="sex!=null">SEX=#{sex,jdbcType=VARCHAR}</if>
+		
+		</set>
+		WHERE ID=#{id}
+	
+	</update>
+	
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string"> 
+		DELETE FROM EMPLOYEE
+		WHERE ID=#{Id}
+	
+	</delete>
+	<!-- 删除多条（一维字符串数组的形式） -->
+	<delete id="delete" parameterType="string">
+		DELETE FROM EMPLOYEE
+		WHERE ID IN
+		<foreach collection="array" item="ID" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
