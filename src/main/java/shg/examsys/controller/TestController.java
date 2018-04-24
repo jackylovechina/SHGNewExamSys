@@ -35,12 +35,7 @@ public class TestController {
 		
 	}
 	
-	@RequestMapping("/employee/ori.action")
-	private String findOri(Employee employee,Model model){
-		
-		return "/test/test.jsp";
-		
-	}
+	
 
 
 }
