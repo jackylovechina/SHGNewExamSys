@@ -35,7 +35,7 @@
 				账号<input type="text" id="number" name="number"
 					style="width: 190px; height: 26px;margin-left: 39px;" /></br> 
 				密码<input type="password" id="password" name="password"
-					style="width: 190px; height: 26px;margin-top:8px;margin-left: 54px; " /></br>
+					style="width: 190px; height: 26px;margin-top:8px;margin-left: 39px; " /></br>
 				<input type="submit" value="登录"
 					style="width: 50px;height: 30px;margin-top: 8px;" /> <a
 					href="registerPage.action">注册</a>
