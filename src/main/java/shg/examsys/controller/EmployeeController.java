@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import shg.examsys.entity.Department;
 import shg.examsys.entity.Employee;
+import shg.examsys.entity.Role;
 import shg.examsys.service.DepartmentService;
 import shg.examsys.service.EmployeeService;
+import shg.examsys.service.RoleService;
 
 @Controller
 public class EmployeeController extends BaseController {
@@ -29,6 +31,9 @@ public class EmployeeController extends BaseController {
 	
 	@Autowired
 	DepartmentService departmentService;
+	
+	@Autowired
+	RoleService roleService;
 
 	@RequestMapping("/employee/toLogin.action")
 	private String findOri(Employee employee, Model model) {
@@ -41,7 +46,7 @@ public class EmployeeController extends BaseController {
 	@RequestMapping("/employee/login.action")
 	public String login(Employee employee, Model model, HttpServletRequest request) {
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("username", employee.getNumber());
+		map.put("number", employee.getNumber());
 		// map.put("password", getMD5PW(employee.getPassword()));
 		List<Employee> userList = employeeService.find(map);
 		if (userList != null && userList.size() > 0) {
@@ -49,7 +54,7 @@ public class EmployeeController extends BaseController {
 			String salt = userList.get(0).getSalt();
 			String password = employee.getPassword() + salt;
 			String MD5password = getMD5PW(password);
-			if (MD5password == realPassword || MD5password.equals(realPassword)) {
+			if ( MD5password.equals(realPassword)) {
 				request.getSession().setAttribute("user", userList.get(0));
 				return "/home.jsp";// 主页
 			}
@@ -111,7 +116,7 @@ public class EmployeeController extends BaseController {
 	}
 
 	// 注册逻辑
-	@RequestMapping("/user/register.action")
+	@RequestMapping("/employee/register.action")
 	public String register(Employee employee, Model model, HttpServletRequest request, HttpServletResponse response) {
 		// 查找账号是否已被注册
 		Map<String, String> map = new HashMap<String, String>();
@@ -122,7 +127,24 @@ public class EmployeeController extends BaseController {
 			model.addAttribute("errorMsg", "注册失败，用户名已被占用！");
 			return "/register.jsp";
 		}
-
+		
+		//注册role位普通员工
+		Map<String, String> roleNameMap=new HashMap<String, String>();
+		roleNameMap.put("roleName", "普通员工");
+		List<Role> roleList=roleService.find(roleNameMap);
+		long role_id=roleList.get(0).getId();
+		
+		//生成6位随机数的salt
+		int intSalt=(int) ((Math.random()*9+1)*100000);
+		String salt=Integer.toString(intSalt);
+		
+		//生成MD5密码
+		String userPassword=employee.getPassword();
+		String MD5Password=getMD5PW(userPassword+salt);
+		
+		employee.setRole_id(role_id);
+		employee.setSalt(salt);
+		employee.setPassword(MD5Password);
 		
 		employeeService.insert(employee);
 		model.addAttribute("noticeMsg", "注册成功，请输入账号密码登录");// 注册成功

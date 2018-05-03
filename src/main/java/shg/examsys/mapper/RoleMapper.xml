@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shg.examsys.mapper.RoleMapper">
+	<!-- resultMap映射 -->
+	<resultMap type="shg.examsys.entity.Role" id="roleRM">
+		<!-- 主键 -->
+		<id property="id" column="ID" jdbcType="BIGINT"/>
+		<!-- 一般属性 -->
+		<result property="roleName" column="RoleName"/>
+	</resultMap>
+	
+	<!-- 查询一个数据 -->
+	<select id="get" parameterType="string" resultMap="roleRM">
+		SELECT * FROM ROLE 
+		WHERE ID=#{id}
+	</select>
+	<!-- 查询 -->
+	<select id="find" parameterType="map" resultMap="roleRM">
+		SELECT * FROM ROLE
+		WHERE 1=1
+		<if test="id !=null" > and ID=#{id}</if>
+		<if test="roleName !=null"> and ROLENAME=#{roleName}</if>
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="shg.examsys.entity.Role">
+		INSERT INTO ROLE
+		(ID,ROLENAME)
+		VALUES
+		(	#{id,jdbcType=BIGINT},
+			#{roleName,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="shg.examsys.entity.Role">
+		UPDATE ROLE
+		<set>
+			<if test="roleName!=null">ROLENAME=#{roelName,jdbcType=VARCHAR},</if>
+		</set>
+		WHERE ID=#{id}
+	</update>
+	
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string"> 
+		DELETE FROM ROLE
+		WHERE ID=#{id}
+	
+	</delete>
+	<!-- 删除多条（一维字符串数组的形式） -->
+	<delete id="delete" parameterType="string">
+		DELETE FROM ROLE
+		WHERE ID IN
+		<foreach collection="array" item="roleID" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	
+	</delete>
+	
+</mapper>
