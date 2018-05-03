@@ -6,8 +6,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,28 +37,28 @@ public class EmployeeController extends BaseController {
 	public String login(Employee employee, Model model, HttpServletRequest request) {
 		Map<String, String> map = new HashMap<String, String>();
 		map.put("username", employee.getNumber());
-		//map.put("password", getMD5PW(employee.getPassword()));
+		// map.put("password", getMD5PW(employee.getPassword()));
 		List<Employee> userList = employeeService.find(map);
-		if (userList!=null&&userList.size()>0) {
-			String realPassword=userList.get(0).getPassword();
-			String salt=userList.get(0).getSalt();
-			String password=employee.getPassword()+salt;
-			String MD5password=getMD5PW(password);
-			if (MD5password==realPassword||MD5password.equals(realPassword)) {
+		if (userList != null && userList.size() > 0) {
+			String realPassword = userList.get(0).getPassword();
+			String salt = userList.get(0).getSalt();
+			String password = employee.getPassword() + salt;
+			String MD5password = getMD5PW(password);
+			if (MD5password == realPassword || MD5password.equals(realPassword)) {
 				request.getSession().setAttribute("user", userList.get(0));
 				return "/home.jsp";// 主页
 			}
 		}
 		model.addAttribute("errorMsg", "登陆失败！账号或密码错误！！");// 错误消息
 		return "/login.jsp";// 登录界面
-		
-		/*if (userList != null && userList.size() > 0) {
-			// key传user不行，不知道为什么,${sessionScope.user.name }取值方式可行
-			request.getSession().setAttribute("user", userList.get(0));
-			return "/home.jsp";// 主页
-		}
-		model.addAttribute("errorMsg", "登陆失败！账号或密码错误！！");// 错误消息
-		return "/login.jsp";// 登录界面*/
+
+		/*
+		 * if (userList != null && userList.size() > 0) { //
+		 * key传user不行，不知道为什么,${sessionScope.user.name }取值方式可行
+		 * request.getSession().setAttribute("user", userList.get(0)); return
+		 * "/home.jsp";// 主页 } model.addAttribute("errorMsg",
+		 * "登陆失败！账号或密码错误！！");// 错误消息 return "/login.jsp";// 登录界面
+		 */
 
 	}
 
@@ -92,5 +94,32 @@ public class EmployeeController extends BaseController {
 			}
 		}
 		return strBuilder.toString();
+	}
+
+	// 跳转注册界面
+	@RequestMapping("/employee/registerPage.action")
+	public String toRegister() {
+		return "/register.jsp";
+
+	}
+
+	// 注册逻辑
+	@RequestMapping("/user/register.action")
+	public String register(Employee user, Model model, HttpServletRequest request, HttpServletResponse response) {
+		// 查找账号是否已被注册
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("usernumber", user.getNumber());
+		List<Employee> userList = employeeService.find(map);
+		if (userList != null && userList.size() > 0) {
+			// 已注册，提示用户，回到注册界面
+			model.addAttribute("errorMsg", "注册失败，用户名已被占用！");
+			return "/register.jsp";
+		}
+
+		
+		employeeService.insert(user);
+		model.addAttribute("noticeMsg", "注册成功，请输入账号密码登录");// 注册成功
+		return "/login.jsp";// 登录界面
+
 	}
 }
