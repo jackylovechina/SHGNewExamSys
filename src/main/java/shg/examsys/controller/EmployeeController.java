@@ -16,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import shg.examsys.entity.Department;
 import shg.examsys.entity.Employee;
+import shg.examsys.service.DepartmentService;
 import shg.examsys.service.EmployeeService;
 
 @Controller
@@ -24,6 +26,9 @@ public class EmployeeController extends BaseController {
 
 	@Autowired
 	EmployeeService employeeService;
+	
+	@Autowired
+	DepartmentService departmentService;
 
 	@RequestMapping("/employee/toLogin.action")
 	private String findOri(Employee employee, Model model) {
@@ -98,17 +103,19 @@ public class EmployeeController extends BaseController {
 
 	// 跳转注册界面
 	@RequestMapping("/employee/registerPage.action")
-	public String toRegister() {
+	public String toRegister(Model model) {
+		List<Department> departmentList = departmentService.find(null);
+		model.addAttribute("departmentList", departmentList);
 		return "/register.jsp";
 
 	}
 
 	// 注册逻辑
 	@RequestMapping("/user/register.action")
-	public String register(Employee user, Model model, HttpServletRequest request, HttpServletResponse response) {
+	public String register(Employee employee, Model model, HttpServletRequest request, HttpServletResponse response) {
 		// 查找账号是否已被注册
 		Map<String, String> map = new HashMap<String, String>();
-		map.put("usernumber", user.getNumber());
+		map.put("number", employee.getNumber());
 		List<Employee> userList = employeeService.find(map);
 		if (userList != null && userList.size() > 0) {
 			// 已注册，提示用户，回到注册界面
@@ -117,7 +124,7 @@ public class EmployeeController extends BaseController {
 		}
 
 		
-		employeeService.insert(user);
+		employeeService.insert(employee);
 		model.addAttribute("noticeMsg", "注册成功，请输入账号密码登录");// 注册成功
 		return "/login.jsp";// 登录界面
 

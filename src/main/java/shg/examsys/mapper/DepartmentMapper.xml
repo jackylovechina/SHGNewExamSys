@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shg.examsys.mapper.DepartmentMapper">
+	<!-- resultMap映射 -->
+	<resultMap type="shg.examsys.entity.Department" id="departmentRM">
+		<!-- 主键 -->
+		<id property="id" column="ID" jdbcType="BIGINT"/>
+		<!-- 一般属性 -->
+		<result property="departmentName" column="DepartmentName"/>
+		
+	
+	</resultMap>
+	
+	<!-- 查询一个数据 -->
+	<select id="get" parameterType="string" resultMap="departmentRM">
+		SELECT * FROM DEPARTMENT 
+		WHERE ID=#{id}
+	</select>
+	<!-- 查询 -->
+	<select id="find" parameterType="map" resultMap="departmentRM">
+		SELECT * FROM DEPARTMENT
+		WHERE 1=1
+		<if test="departmentName !=null" > and DepartmentName=#{departmentName}</if>
+		<if test="id !=null"> and ID=#{id}</if>
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="shg.examsys.entity.Department">
+		INSERT INTO DEPARTMENT
+		(ID,DEPARTMENTNAME)
+		VALUES
+		(	#{id,jdbcType=BIGINT},
+			#{departmentName,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="shg.examsys.entity.Department">
+		UPDATE DEPARTMENT
+		<set>
+			<if test="departmentName!=null">DEPARTMENTNAME=#{departmentName,jdbcType=VARCHAR}</if>
+		</set>
+		WHERE ID=#{id}
+	
+	</update>
+	
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string"> 
+		DELETE FROM DEPARTMENT
+		WHERE ID=#{id}
+	
+	</delete>
+	<!-- 删除多条（一维字符串数组的形式） -->
+	<delete id="delete" parameterType="string">
+		DELETE FROM DEPARTMENT
+		WHERE ID IN
+		<foreach collection="array" item="departmentID" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	
+	</delete>
+	
+</mapper>

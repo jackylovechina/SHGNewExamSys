@@ -10,9 +10,9 @@
 	type="text/css" rel="stylesheet"/>
 <script type="text/javascript">
 	function validate() {
-		if (document.getElementById("name").value == "") {
+		if (document.getElementById("number").value == "") {
 			alert("姓名不能为空");
-			document.getElementById("name").focus();
+			document.getElementById("number").focus();
 			return false;
 
 		} else if (document.getElementById("password").value == "") {
@@ -20,9 +20,9 @@
 			document.getElementById("password").focus();
 			return false;
 
-		} else if (document.getElementById("number").value == "") {
+		} else if (document.getElementById("name").value == "") {
 			alert("工号不能为空");
-			document.getElementById("number").focus();
+			document.getElementById("name").focus();
 			return false;
 
 		} else if (document.getElementById("sex").value == "") {
@@ -43,25 +43,21 @@
 			<form action="register.action" method="post" id="myform" onsubmit="return validate()">
 			
 			工号<input type="text" id="number" name="number"
-				style="width:190px;height: 26px;margin-top:8px;margin-left: 54px;"/></br>
+				style="width:190px;height: 26px;margin-top:8px;margin-left: 40px;"/></br>
 			密码<input type="password" id="password" name="password"
-				style="width:190px;height: 26px;margin-top:8px;margin-left: 54px;"  /></br>
+				style="width:190px;height: 26px;margin-top:8px;margin-left: 40px;"  /></br>
 			姓名<input type="text" id="name" name="name"
-				style="width:190px;height: 26px;margin-top:8px;margin-left: 54px;" /></br>
+				style="width:190px;height: 26px;margin-top:8px;margin-left: 40px;" /></br>
 			性别<select id="sex" name="sex"
-				style="width:190px;height: 26px;margin-top:8px;margin-left: 54px;" >
+				style="width:190px;height: 26px;margin-top:8px;margin-left: 40px;" >
 				<option value="男" selected="selected">男</option>
 				<option value="女">女</option>
 				</select></br>
 			部门<select id="dep_id" name="dep_id" 
-				style="width:190px;height: 26px;margin-top:8px;margin-left: 54px;">
-				<!--<c:forEach items="${departments }" var="department" varStatus="status">
-				<option value="${department.id }">${department.name }</option>
-				</c:forEach>-->
-				<option value="volvo">Volvo</option>
-				<option value="saab">Saab</option>
-				<option value="fiat" selected="selected">Fiat</option>
-				<option value="audi">Audi</option>
+				style="width:190px;height: 26px;margin-top:8px;margin-left: 40px;">
+					<c:forEach items="${departmentList }" var="department" varStatus="status">
+					<option value="${department.id }">${department.departmentName }</option>
+					</c:forEach>
 				</select></br>
 				
 				<input type="submit" value="注册" 
@@ -71,6 +67,9 @@
 			<!--  -->
 			<c:if test="${errorMsg!=null }">
 				<font color="red">${errorMsg }</font>
+			</c:if>
+			<c:if test="${noticeMsg!=null }">
+				<font color="green">${noticeMsg }</font>
 			</c:if>
 		</div>
 	
