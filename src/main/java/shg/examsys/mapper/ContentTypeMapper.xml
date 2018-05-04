@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shg.examsys.mapper.ContentTypeMapper">
+	<!-- resultMap映射 -->
+	<resultMap type="shg.examsys.entity.ContentType" id="contentTypeRM">
+		<!-- 主键 -->
+		<id property="id" column="ID" jdbcType="BIGINT"/>
+		<!-- 一般属性 -->
+		<result property="typeName" column="TypeName"/>
+	</resultMap>
+	
+	<!-- 查询一个数据 -->
+	<select id="get" parameterType="string" resultMap="contentTypeRM">
+		SELECT * FROM CONTENTTYPE 
+		WHERE id=#{id}
+	</select>
+	<!-- 查询 -->
+	<select id="find" parameterType="map" resultMap="contentTypeRM">
+		SELECT * FROM CONTENTTYPE
+		WHERE 1=1
+		<if test="id !=null" > and ID=#{ID}</if>
+		<if test="typeName !=null"> and TYPENAME=#{typeName}</if>
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="shg.examsys.entity.ContentType">
+		INSERT INTO CONTENTTYPE
+		(ID,TYPENAME)
+		VALUES
+		(	#{id,jdbcType=BIGINT},
+			#{typeName,jdbcType=VARCHAR},
+		)
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="shg.examsys.entity.ContentType">
+		UPDATE CONTENTTYPE
+		<set>
+			<if test="typeName!=null">TYPENAME=#{typeName,jdbcType=VARCHAR},</if>
+		</set>
+		WHERE ID=#{id}
+	
+	</update>
+	
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string"> 
+		DELETE FROM CONTENTTYPE
+		WHERE ID=#{id}
+	
+	</delete>
+	<!-- 删除多条（一维字符串数组的形式） -->
+	<delete id="delete" parameterType="string">
+		DELETE FROM CONTENTTYPE
+		WHERE ID IN
+		<foreach collection="array" item="ID" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
