@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shg.examsys.mapper.QuestionMapper">
+	<!-- resultMap映射 -->
+	<resultMap type="shg.examsys.entity.Question" id="questionRM">
+		<!-- 主键 -->
+		<id property="id" column="ID" jdbcType="BIGINT"/>
+		<!-- 一般属性 -->
+		<result property="conType_id" column="ConType_ID"/>
+		<result property="queType_id" column="QueType_ID"/>
+		<result property="questionContent" column="QuestionContent"/>
+		<result property="choiceA" column="ChoiceA"/>
+		<result property="choiceB" column="ChoiceB"/>
+		<result property="choiceC" column="ChoiceC"/>
+		<result property="choiceD" column="ChoiceD"/>
+		<result property="standardAnswer" column="StandardAnswer"/>
+		<result property="orderly" column="Orderly"/>
+	</resultMap>
+	
+	<!-- 查询一个数据 -->
+	<select id="get" parameterType="long" resultMap="questionRM">
+		SELECT * FROM QUESTION 
+		WHERE ID=#{id}
+	</select>
+	<!-- 查询 -->
+	<select id="find" parameterType="map" resultMap="questionRM">
+		SELECT * FROM QUESTION
+		WHERE 1=1
+		<if test="id !=null" > and ID=#{id}</if>
+		<if test="conType_id !=null"> and CONTYPE_ID=#{conType_id}</if>
+		<if test="queType_id !=null"> and QUETYPE_ID=#{queType_id}</if>
+		<if test="questionContent !=null"> and QUESTIONCONTENT like #{questionContent}</if>
+	</select>
+	
+	<!-- 插入 -->
+	<insert id="insert" parameterType="shg.examsys.entity.Question">
+		INSERT INTO QUESTION
+		(CONTYPE_ID,QUETYPE_ID,QUESTIONCONTENT,CHOICEA,CHOICEB,CHOICEC,CHOICED,STANDARDANSWER,ORDERLY)
+		VALUES
+		(	#{conType_id,jdbcType=BIGINT},
+			#{queType_id,jdbcType=BIGINT},
+			#{questionContent,jdbcType=VARCHAR},
+			#{choiceA,jdbcType=VARCHAR},
+			#{choiceB,jdbcType=VARCHAR},
+			#{choiceC,jdbcType=VARCHAR},
+			#{choiceD,jdbcType=VARCHAR},
+			#{standardAnswer,jdbcType=VARCHAR},
+			#{orderly,jdbcType=TINYINT}		
+		)
+	</insert>
+	
+	<!-- 修改 -->
+	<update id="update" parameterType="shg.examsys.entity.Question">
+		UPDATE QUESTION
+		<set>
+			<if test="conType_id!=null">CONTYPE_ID=#{conType_id,jdbcType=BIGINT},</if>
+			<if test="queType_id!=null">QUETYPE_ID=#{queType_id,jdbcType=BIGINT},</if>
+			<if test="questionContent!=null">QUESTIONCONTENT=#{questionContent,jdbcType=VARCHAR},</if>
+			<if test="choiceA!=null">CHOICEA=#{choiceA,jdbcType=VARCHAR}</if>
+			<if test="choiceB!=null">CHOICEB=#{choiceB,jdbcType=VARCHAR}</if>
+			<if test="choiceC!=null">CHOICEC=#{choiceC,jdbcType=VARCHAR}</if>
+			<if test="choiceD!=null">CHOICED=#{choiceD,jdbcType=VARCHAR}</if>
+			<if test="standardAnswer!=null">STANDARDANSWER=#{standardAnswer,jdbcType=VARCHAR}</if>
+			<if test="orderly!=null">ORDERLY=#{orderly,jdbcType=TINYINT}</if>
+		
+		</set>
+		WHERE ID=#{id}
+	
+	</update>
+	
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="string"> 
+		DELETE FROM QUESTION
+		WHERE ID=#{Id}
+	
+	</delete>
+	<!-- 删除多条（一维字符串数组的形式） -->
+	<delete id="delete" parameterType="string">
+		DELETE FROM QUESTION
+		WHERE ID IN
+		<foreach collection="array" item="ID" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	
+	</delete>
+	
+</mapper>
+
+
+
+
+
+
+
