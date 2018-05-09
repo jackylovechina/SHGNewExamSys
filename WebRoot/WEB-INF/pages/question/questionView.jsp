@@ -20,7 +20,7 @@
 	 <div id="wrap">
 	 	<div id="left">
 	 	<div class="left-title">
-	 	<a href="${pageContext.request.contextPath }/question/questionImport.action">试题导入</a>
+	 	<a href="${pageContext.request.contextPath }/question/questionManage.action">试题导入</a>
 	 	</div>
 	 	<div class="left-title">
 	 	<a href="${pageContext.request.contextPath }/question/questionView.action">试题查看</a>
