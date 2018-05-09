@@ -27,7 +27,7 @@
 	 	</div>
 	 	</div>
 	 	<div id="right">
-	 		<%@ include file="questionImport.jsp" %>
+	 		<p>view</p>
 	 	
 	 	</div>
 	 

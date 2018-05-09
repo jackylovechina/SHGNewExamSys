@@ -16,6 +16,25 @@ h1{
 .allbody{
 	background-color: #ffffff
 }
+#menu{
+	background-color:#00bfff ;
+}
+#wrap{
+	height:600px;
+    display: flex;
+    background-color: #dcdcdc;
+    
+}
+#left{
+	width: 200px;
+	background-color: #696969;
+}
+.left-title{
+	margin-top: 10px;
+	margin-left: 20px;
+	margin-bottom: 10px;
+	
+}
 
 #content{
 	background-color:#FFFFFF;

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import shg.examsys.entity.Question;
 
 
@@ -16,4 +18,6 @@ public interface QuestionService {
 	public void update(Question question);//
 	public void deleteById(Serializable id);//
 	public void delete(Serializable[] ids);//
+	//
+	public Integer importExcel(MultipartFile myFile ,long conType_id,long queType_id) throws Exception;
 }
