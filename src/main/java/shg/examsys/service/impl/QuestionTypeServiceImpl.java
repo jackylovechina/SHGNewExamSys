@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import shg.examsys.dao.QuestionTypeDao;
 import shg.examsys.entity.QuestionType;
 import shg.examsys.service.QuestionTypeService;
+
 @Service
 public class QuestionTypeServiceImpl implements QuestionTypeService{
 	

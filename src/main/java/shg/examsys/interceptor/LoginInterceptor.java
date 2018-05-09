@@ -29,7 +29,7 @@ public class LoginInterceptor implements HandlerInterceptor{
 		//判断当前请求地址是否登录/注册地址
 		if(!(uri.contains("Login")||uri.contains("login")||uri.contains("register"))){
 			//非登录地�?
-			if(request.getSession().getAttribute("employee")!=null){
+			if(request.getSession().getAttribute("user")!=null){
 				return true;//如果已经登陆过，放行
 			}else{
 				if(uri.contains("css")||uri.contains("js")||uri.contains("images")){

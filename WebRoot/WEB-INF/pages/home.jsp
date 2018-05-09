@@ -5,8 +5,11 @@
 <head>
 <title>主页</title>
 <style *{margin:0; padding:0;}#menuContent a{text-decoration:none;color:#ffffff}></style>
+<link href ="${pageContext.request.contextPath }/css/regcss.css" 
+	type="text/css" rel="stylesheet"/>
+
 </head>
-<body>
+<body class="allbody">
 
 	<%@ include file="menu.jsp" %>
 	

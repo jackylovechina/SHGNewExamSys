@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import shg.examsys.dao.ContentTypeDao;
 import shg.examsys.entity.ContentType;
 import shg.examsys.service.ContentTypeService;
 
+@Service
 public class ContentTypeServiceImpl implements ContentTypeService{
 	
 	@Autowired
