@@ -1,12 +1,10 @@
 package shg.examsys.controller;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import shg.examsys.entity.ContentType;
-import shg.examsys.entity.Question;
 import shg.examsys.entity.QuestionType;
 import shg.examsys.service.ContentTypeService;
 import shg.examsys.service.QuestionService;
@@ -33,8 +30,8 @@ public class ExamQuestionController extends BaseController{
 	
 	
 	
-	@RequestMapping("/question/questionImport.action")
-	public String questionImport(Model model){
+	@RequestMapping("/question/questionManage.action")
+	public String questionManage(Model model){
 		
 		List<ContentType> conTypeList=contentTypeService.find(null);
 		List<QuestionType> queTypeList=questionTypeService.find(null);
@@ -46,7 +43,7 @@ public class ExamQuestionController extends BaseController{
 	}
 	
 	@RequestMapping(value="/question/fileImport.action",method=RequestMethod.POST)
-	public String fileImport(HttpServletRequest httpServletRequest,@RequestParam("excelFile") MultipartFile file,Model model){
+	public String questionImport(HttpServletRequest httpServletRequest,@RequestParam("excelFile") MultipartFile file,Model model){
 		long conType_id=Long.parseLong(httpServletRequest.getParameter("conType_id"));
 		long queType_id=Long.parseLong(httpServletRequest.getParameter("queType_id"));
 		Integer num = null;

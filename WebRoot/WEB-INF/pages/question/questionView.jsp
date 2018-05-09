@@ -27,7 +27,7 @@
 	 	</div>
 	 	</div>
 	 	<div id="right">
-	 		<p>view</p>
+	 		<%@ include file="view.jsp" %>
 	 	
 	 	</div>
 	 

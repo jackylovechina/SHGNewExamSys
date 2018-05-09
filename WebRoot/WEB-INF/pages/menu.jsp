@@ -5,7 +5,7 @@
 	</h1><br/>
 	<div class="topview" style="margin-left: 10px;margin-bottom: 10px;">
 	<a >考试管理</a>
- 	<a href="${pageContext.request.contextPath }/question/questionImport.action">试题管理</a>
+ 	<a href="${pageContext.request.contextPath }/question/questionManage.action">试题管理</a>
  	<a>基础数据</a>
  	<a>用户设置</a>
 	</div>
