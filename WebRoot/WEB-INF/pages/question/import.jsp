@@ -14,8 +14,10 @@
 			varStatus="status">
 			<option value="${questionType.id }">${questionType.typeName }</option>
 		</c:forEach>
-	</select> <br>
-	<br> <font style="margin-left: 10px;">选择题库文件：</font> 
+	</select> 
+	<br>
+	<br> 
+	<font style="margin-left: 10px;">选择题库文件：</font> 
 	<input type="file" name="excelFile"> 
 	<input type="submit" value="批量添加" style="background-color: #99ffff"> <br>
 	<c:if test="${importMsg!=null }">

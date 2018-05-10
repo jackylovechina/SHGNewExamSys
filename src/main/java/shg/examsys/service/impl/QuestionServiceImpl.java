@@ -164,4 +164,10 @@ public class QuestionServiceImpl implements QuestionService {
 
 	}
 
+	@Override
+	public int count(Map map) {
+		// TODO Auto-generated method stub
+		return questionDao.count(map);
+	}
+
 }

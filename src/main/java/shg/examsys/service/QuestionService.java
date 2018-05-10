@@ -19,5 +19,6 @@ public interface QuestionService {
 	public void deleteById(Serializable id);//
 	public void delete(Serializable[] ids);//
 	//
+	public int count(Map map);
 	public Integer importExcel(MultipartFile myFile ,long conType_id,long queType_id) throws Exception;
 }

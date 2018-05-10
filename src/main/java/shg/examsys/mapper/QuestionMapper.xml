@@ -19,6 +19,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="orderly" column="Orderly"/>
 	</resultMap>
 	
+	<!-- SQL片段 -->
+	<sql id="query_question_where">
+		<if test="questionContent!=null">and QUESTIONCONTENT like #{questionContent}</if>
+		<if test="conType_id!=null">and CONTYPE_ID = #{conType_id}</if>
+		<if test="queType_id!=null">and QUETYPE_ID = #{queType_id}</if>
+	</sql>
+	<!-- 统计数量 -->
+	<select id="count" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM QUESTION
+		WHERE 1=1
+		<include refid="query_question_where"></include><!--  -->
+	</select>
 	<!-- 查询一个数据 -->
 	<select id="get" parameterType="long" resultMap="questionRM">
 		SELECT * FROM QUESTION 
@@ -32,6 +44,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<if test="conType_id !=null"> and CONTYPE_ID=#{conType_id}</if>
 		<if test="queType_id !=null"> and QUETYPE_ID=#{queType_id}</if>
 		<if test="questionContent !=null"> and QUESTIONCONTENT like #{questionContent}</if>
+		<if test="startPage!=null and pageSize!=null">
+			LIMIT #{startPage},#{pageSize}</if>
 	</select>
 	
 	<!-- 插入 -->

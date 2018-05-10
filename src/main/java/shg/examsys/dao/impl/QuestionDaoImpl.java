@@ -1,5 +1,7 @@
 package shg.examsys.dao.impl;
 
+import java.util.Map;
+
 import org.springframework.stereotype.Repository;
 
 import shg.examsys.dao.QuestionDao;
@@ -12,5 +14,12 @@ public class QuestionDaoImpl extends BaseDaoImpl<Question> implements QuestionDa
 		// TODO Auto-generated constructor stub
 		super.setNs("shg.examsys.mapper.QuestionMapper");
 	}
+
+	@Override
+	public int count(Map map) {
+		// TODO Auto-generated method stub
+		return this.getSqlSession().selectOne(this.getNs()+".count",map);
+	}
+	
 
 }

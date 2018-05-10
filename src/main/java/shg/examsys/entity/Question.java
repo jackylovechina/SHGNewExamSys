@@ -1,6 +1,6 @@
 package shg.examsys.entity;
 
-public class Question {
+public class Question extends PageEntity{
 
 	private long id;
 	private long conType_id;
