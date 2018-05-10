@@ -9,10 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.alibaba.fastjson.JSONObject;
 
 import shg.examsys.entity.ContentType;
 import shg.examsys.entity.Question;
@@ -69,10 +73,10 @@ public class ExamQuestionController extends BaseController {
 		List<QuestionType> queTypeList = questionTypeService.find(null);
 		model.addAttribute("conTypeList", conTypeList);
 		model.addAttribute("queTypeList", queTypeList);
-		
-		
 		List<Question> questionList = questionService.find(map);
+		
 		model.addAttribute("list", questionList);
+		
 		model.addAttribute("conTypeId", question.getConType_id());
 		model.addAttribute("queTypeId", question.getQueType_id());
 		model.addAttribute("currentPage", question.getCurrentPage());
@@ -109,10 +113,22 @@ public class ExamQuestionController extends BaseController {
 		return parm == null ? null : (parm.equals("") ? null : "%" + parm + "%");
 	}
 	
-	@RequestMapping("/question/edit.action")
-	public String edit(Model model ,Question question){
+	@RequestMapping("/question/editQuestion.action")
+	public @ResponseBody Question editQuestion(@RequestBody String json){
+		long id=JSONObject.parseObject(json).getLongValue("id");
+		return questionService.get(id);
 		
-		return questionView(model, question);
+	}
+	
+	@RequestMapping("/question/edit.action")
+	public String edit(Model model ,Question question ){
+		questionService.update(question);
+		
+		Question queryQuestion=new Question();
+		queryQuestion.setStartPage(question.getStartPage());
+		queryQuestion.setCurrentPage(question.getCurrentPage());
+		queryQuestion.setPageSize(question.getPageSize());
+		return questionView(model, queryQuestion);
 		
 	}
 

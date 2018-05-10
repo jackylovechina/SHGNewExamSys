@@ -103,7 +103,7 @@ public class QuestionServiceImpl implements QuestionService {
 				String choiceC=getCellValue(row.getCell(3));
 				question.setChoiceC(choiceC);
 				//
-				String choiceD=getCellValue(row.getCell(3));
+				String choiceD=getCellValue(row.getCell(4));
 				question.setChoiceD(choiceD);
 				//
 				String standardAnswer=getCellValue(row.getCell(5));

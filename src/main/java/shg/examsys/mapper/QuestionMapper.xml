@@ -72,11 +72,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="conType_id!=null">CONTYPE_ID=#{conType_id,jdbcType=BIGINT},</if>
 			<if test="queType_id!=null">QUETYPE_ID=#{queType_id,jdbcType=BIGINT},</if>
 			<if test="questionContent!=null">QUESTIONCONTENT=#{questionContent,jdbcType=VARCHAR},</if>
-			<if test="choiceA!=null">CHOICEA=#{choiceA,jdbcType=VARCHAR}</if>
-			<if test="choiceB!=null">CHOICEB=#{choiceB,jdbcType=VARCHAR}</if>
-			<if test="choiceC!=null">CHOICEC=#{choiceC,jdbcType=VARCHAR}</if>
-			<if test="choiceD!=null">CHOICED=#{choiceD,jdbcType=VARCHAR}</if>
-			<if test="standardAnswer!=null">STANDARDANSWER=#{standardAnswer,jdbcType=VARCHAR}</if>
+			<if test="choiceA!=null">CHOICEA=#{choiceA,jdbcType=VARCHAR},</if>
+			<if test="choiceB!=null">CHOICEB=#{choiceB,jdbcType=VARCHAR},</if>
+			<if test="choiceC!=null">CHOICEC=#{choiceC,jdbcType=VARCHAR},</if>
+			<if test="choiceD!=null">CHOICED=#{choiceD,jdbcType=VARCHAR},</if>
+			<if test="standardAnswer!=null">STANDARDANSWER=#{standardAnswer,jdbcType=VARCHAR},</if>
 			<if test="orderly!=null">ORDERLY=#{orderly,jdbcType=TINYINT}</if>
 		
 		</set>

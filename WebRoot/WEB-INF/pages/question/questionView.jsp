@@ -82,16 +82,17 @@
 		var message ="{'id':'"+id+"'}";
 		$.ajax({
 			type: "post",
-			url: "${pageContext.request.contextPath}/question/edit.action",
+			url: "${pageContext.request.contextPath}/question/editQuestion.action",
 			contentType:'application/json;charset=utf-8',
 			data:message,//数据格式是JSON串
 			success:function(data){//返回JSON结果
+				$("#id").val(data["id"]);
 				$("#editContent").val(data["questionContent"]);
 				$("#editA").val(data["choiceA"]);
 				$("#editB").val(data["choiceB"]);
 				$("#editC").val(data["choiceC"]);
 				$("#editD").val(data["choiceD"]);
-				$("#editAswer").val(data["standardAnswer"]);
+				$("#editAnswer").val(data["standardAnswer"]);
 				//显示弹出框
 				$(".mask").css("display","block");
 				//引入分页信息至form表单
@@ -139,7 +140,6 @@
 			</div>
 		</div>
 		<div id="right">
-
 			<div class="mask">
 				<div class="c">
 					<div
@@ -162,14 +162,14 @@
 							</c:forEach>
 						</select>
 						<br>
-						题目内容：<input type="text" id="editContent" name="questionContent" style="width: 220px;"><br> 
+						题目内容：<textarea  id="editContent" name="questionContent" style="width: 220px;"></textarea><br> 
 						<hr style="margin-top: 10px;" />
 						选项A：<input type="text" id="editA" name="choiceA" style="width: 220px;margin-left: 20px"><br >
 						选项B：<input type="text" id="editB" name="choiceB" style="width: 220px;margin-left: 20px"><br > 
 						选项C：<input type="text" id="editC" name="choiceC" style="width: 220px;margin-left: 20px"><br >
 						选项D：<input type="text" id="editD" name="choiceD" style="width: 220px;margin-left: 20px"><br >
 						
-						正确答案：<input type="text" id="editAswer" name="standardAnswer" style="width: 220px;"><br>
+						正确答案：<input type="text" id="editAnswer" name="standardAnswer" style="width: 220px;"><br>
 						<br>
 						<input type="hidden" name="id" id="id" /> 
 						<input type="hidden" name="startPage" id="eStartPage" /> 
@@ -179,7 +179,8 @@
 					</form>
 				</div>
 			</div>
-
+				
+			
 			<div>
 				<form id="listForm" action="questionView.action" method="post">
 					题目种类：<select name="conType_id">
@@ -202,6 +203,7 @@
 						<font color="red">${errorMsg }</font>
 						<br />
 					</c:if>
+					
 					<input type="hidden" name="startPage" id="startPage" value="${startPage }" /> 
 					<input type="hidden" name="currentPage" id="currentPage" value="${currentPage }" /> 
 					<input type="hidden" name="pageSize" id="pageSize" value="${pageSize }" /> 
@@ -209,6 +211,8 @@
 					<input type="hidden" name="countNumber" id="countNumber" value="${countNumber }" />
 
 				</form>
+				
+				
 			</div>
 			<div>
 				<hr style="margin-top: 10px;" />
@@ -234,7 +238,7 @@
 								<td>${item.choiceC }</td>
 								<td>${item.choiceD }</td>
 								<td>${item.standardAnswer }</td>
-
+								
 								<td class="question-deal"><a
 									onclick="editQuestion('${item.id}')">编辑</a>| <a
 									onclick="deleteQuestion('${item.id}','${item.questionContent }')">删除</a>

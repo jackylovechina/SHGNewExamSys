@@ -2,7 +2,6 @@
 
 body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
 	padding:0;
-	
 	font-family: "Microsoft YaHei";
 	color: #000000;
 }
@@ -65,7 +64,7 @@ h1{
 	top: 90px;
 }
 .c{
-	border-style: solid;width: 350px;height: 300px;
+	border-style: solid;width: 350px;height: 400px;
 	margin: 4 23 0 23;border-radius: 5;display: block;
 	background: #fff;margin: 10% auto;
 	background-color: #ccffff;
