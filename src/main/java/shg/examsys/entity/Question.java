@@ -1,10 +1,10 @@
 package shg.examsys.entity;
 
-public class Question extends PageEntity{
+public class Question extends PageEntity {
 
-	private long id;
-	private long conType_id;
-	private long queType_id;
+	private Long id;
+	private Long conType_id;
+	private Long queType_id;
 	private String questionContent;
 	private String choiceA;
 	private String choiceB;
@@ -13,27 +13,27 @@ public class Question extends PageEntity{
 	private String standardAnswer;
 	private boolean orderly;
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public long getConType_id() {
+	public Long getConType_id() {
 		return conType_id;
 	}
 
-	public void setConType_id(long conType_id) {
+	public void setConType_id(Long conType_id) {
 		this.conType_id = conType_id;
 	}
 
-	public long getQueType_id() {
+	public Long getQueType_id() {
 		return queType_id;
 	}
 
-	public void setQueType_id(long queType_id) {
+	public void setQueType_id(Long queType_id) {
 		this.queType_id = queType_id;
 	}
 

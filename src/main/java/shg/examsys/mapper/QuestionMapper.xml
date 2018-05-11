@@ -85,13 +85,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<!-- 删除一条 -->
-	<delete id="deleteById" parameterType="string"> 
+	<delete id="deleteById" parameterType="long"> 
 		DELETE FROM QUESTION
 		WHERE ID=#{Id}
 	
 	</delete>
 	<!-- 删除多条（一维字符串数组的形式） -->
-	<delete id="delete" parameterType="string">
+	<delete id="delete" parameterType="long">
 		DELETE FROM QUESTION
 		WHERE ID IN
 		<foreach collection="array" item="ID" open="(" close=")" separator=",">

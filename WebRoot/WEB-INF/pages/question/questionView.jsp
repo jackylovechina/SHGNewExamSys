@@ -108,13 +108,26 @@
 	} 
 	
 	function deleteQuestion(id,name){
-		if(window.confirm("你确定要删除用户 "+name+"吗?")){
-			$("#dRetailerId").val(id);//向form中引入id
+		if(window.confirm("你确定要删除 :"+name+id+"吗?")){
+			var message="{'id':'"+id+"'}";
+			$.ajax({
+			type: "post",
+			url: "${pageContext.request.contextPath}/question/delete.action",
+			contentType:'application/json;charset=utf-8',
+			data:message,//数据格式是JSON串
+			success:function(data){//返回JSON结果
+			$("#dStartPage").val($("#startPage").val());
+			$("#dCurrentPage").val($("#currentPage").val());
+			$("#dPageSize").val($("#pageSize").val());
+			$("#listForm").submit();//提交表单
+			}
+			});
+			/*$("#dQuestionId").val(id);//向form中引入id
 			//引入分页信息至该form表单
 			$("#dStartPage").val($("#startPage").val());
 			$("#dCurrentPage").val($("#currentPage").val());
 			$("#dPageSize").val($("#pageSize").val());
-			$("#deleteForm").submit();//提交表单
+			$("#deleteForm").submit();//提交表单*/
 		}
 		
 	}
@@ -144,8 +157,7 @@
 				<div class="c">
 					<div
 						style="background-color: #173e65;height: 30px;color: #fff;font-size: 12px;padding-left: 7px;">
-						修改信息<font style="float: right;padding-right: 10px;"
-							onclick="cancelEdit()">X</font>
+						修改信息<font style="float: right;padding-right: 10px;" onclick="cancelEdit()">X</font>
 					</div>
 					<form id="editForm" action="edit.action" method="post">
 						题目种类：<select name="conType_id">
@@ -184,19 +196,20 @@
 			<div>
 				<form id="listForm" action="questionView.action" method="post">
 					题目种类：<select name="conType_id">
+							<option value=""></option>
 						<c:forEach items="${conTypeList }" var="item" varStatus="status">
 							<option value="${item.id }"
 								<c:if test="${item.id == conTypeId }">selected</c:if>>${item.typeName }</option>
 						</c:forEach>
 					</select> 
 					题目类型：<select name="queType_id">
+							<option value=""></option>
 						<c:forEach items="${queTypeList }" var="item" varStatus="status">
 							<option value="${item.id }"
 								<c:if test="${item.id == queTypeId }">selected </c:if>>${item.typeName }</option>
 						</c:forEach>
-					</select> <br> <br> 
-					题目内容：<input type="text" name="questionContent" style="width: 120px" /> 
-							<input type="submit" value="搜索" style="background-color: #173e65;color: #FFFFFF;width: 70px;" /> 
+					</select> 
+					<input type="submit" value="搜索" style="background-color: #173e65;color: #FFFFFF;width: 70px;" /> 
 						<br>
 					<!-- 显示错误消息 -->
 					<c:if test="${errorMsg }">
@@ -232,7 +245,7 @@
 						<c:forEach items="${list }" var="item" varStatus="status">
 							<tr>
 								<td>${status.index+1 }</td>
-								<td>${item.questionContent }</td>
+								<td style="width: 250px">${item.questionContent }</td>
 								<td>${item.choiceA }</td>
 								<td>${item.choiceB }</td>
 								<td>${item.choiceC }</td>
@@ -243,7 +256,8 @@
 									onclick="editQuestion('${item.id}')">编辑</a>| <a
 									onclick="deleteQuestion('${item.id}','${item.questionContent }')">删除</a>
 									<form id="deleteForm" action="delete.action" method="post">
-										<input type="hidden" name="id" id="dQuestionId" /> 
+										<input type="hidden" name="id" id="dQuestionId"/> 
+										<input type="hidden" name="questionContent" id="dQuestionContent"/>
 										<input type="hidden" name="startPage" id="dStartPage" /> 
 										<input type="hidden" name="currentPage" id="dCurrentPage" /> 
 										<input type="hidden" name="pageSize" id="dPageSize" />

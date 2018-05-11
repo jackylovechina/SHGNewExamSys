@@ -67,33 +67,37 @@ public class ExamQuestionController extends BaseController {
 
 	@RequestMapping("/question/questionView.action")
 	public String questionView(Model model, Question question) {
-		Map<String, Object> map =this.questionToMap(question);
-		
+		Map<String, Object> map = this.questionToMap(question);
+
 		List<ContentType> conTypeList = contentTypeService.find(null);
 		List<QuestionType> queTypeList = questionTypeService.find(null);
+
 		model.addAttribute("conTypeList", conTypeList);
 		model.addAttribute("queTypeList", queTypeList);
 		List<Question> questionList = questionService.find(map);
-		
+
 		model.addAttribute("list", questionList);
-		
+
 		model.addAttribute("conTypeId", question.getConType_id());
 		model.addAttribute("queTypeId", question.getQueType_id());
+
 		model.addAttribute("currentPage", question.getCurrentPage());
 		model.addAttribute("startPage", question.getStartPage());
-		int countNumber=questionService.count(map);
+
+		int countNumber = questionService.count(map);
 		model.addAttribute("countNumber", countNumber);
-		int pageSize=question.getPageSize();
+		int pageSize = question.getPageSize();
 		model.addAttribute("pageSize", pageSize);
 		int sumPageNumber = countNumber % pageSize == 0 ? (countNumber / pageSize) : ((countNumber / pageSize) + 1);
 		model.addAttribute("sumPageNumber", sumPageNumber);
-		
+
 		return "/question/questionView.jsp";
 
 	}
 
 	private Map<String, Object> questionToMap(Question question) {
 		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", question.getId());
 		map.put("questionContent", checkStringIsEmpty(question.getQuestionContent()));
 		map.put("conType_id", question.getConType_id());
 		map.put("queType_id", question.getQueType_id());
@@ -107,29 +111,43 @@ public class ExamQuestionController extends BaseController {
 
 		return map;
 	}
-	
+
 	private String checkStringIsEmpty(String parm) {
 
 		return parm == null ? null : (parm.equals("") ? null : "%" + parm + "%");
 	}
-	
+
 	@RequestMapping("/question/editQuestion.action")
-	public @ResponseBody Question editQuestion(@RequestBody String json){
-		long id=JSONObject.parseObject(json).getLongValue("id");
+	public @ResponseBody Question editQuestion(@RequestBody String json) {
+		long id = JSONObject.parseObject(json).getLongValue("id");
 		return questionService.get(id);
-		
+
 	}
-	
+
 	@RequestMapping("/question/edit.action")
-	public String edit(Model model ,Question question ){
+	public String edit(Model model, Question question) {
 		questionService.update(question);
-		
-		Question queryQuestion=new Question();
+
+		Question queryQuestion = new Question();
 		queryQuestion.setStartPage(question.getStartPage());
 		queryQuestion.setCurrentPage(question.getCurrentPage());
 		queryQuestion.setPageSize(question.getPageSize());
 		return questionView(model, queryQuestion);
-		
+
+	}
+
+	@RequestMapping("/question/delete.action")
+	public String delete(Model model, Question question, @RequestBody String json) {
+		long id = JSONObject.parseObject(json).getLongValue("id");
+		questionService.deleteById(id);
+		//
+		Question queryQuestion = new Question();
+		queryQuestion.setStartPage(question.getStartPage());
+		queryQuestion.setCurrentPage(question.getCurrentPage());
+		queryQuestion.setPageSize(question.getPageSize());
+
+		return questionView(model, queryQuestion);
+
 	}
 
 }
