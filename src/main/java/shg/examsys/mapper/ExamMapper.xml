@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shg.examsys.mapper.ExamMapper">
+	<!-- resultMap映射 -->
+	<resultMap type="shg.examsys.entity.Exam" id="examRM">
+		<!-- 主键 -->
+		<id property="id" column="ID" jdbcType="BIGINT"/>
+		<!-- 一般属性 -->
+		<result property="examName" column="ExamName" />
+		<result property="startTime" column="StartTime"/>
+		<result property="endTime" column="EndTime"/>
+	</resultMap>
+	<!-- 查询一个数据 -->
+	<select id="get" parameterType="long" resultMap="examRM">
+		SELECT * FROM EXAM 
+		WHERE ID=#{Id}
+	</select>
+	<!-- SQL片段 -->
+	<sql id="query_exam_where">
+		<if test="examName!=null">and EXAMNAME like #{examName}</if>
+	</sql>
+	<!-- 查询 -->
+	<select id="find" parameterType="java.util.HashMap" resultMap="examRM">
+		SELECT * FROM EXAM
+		WHERE 1=1
+		<include refid="query_exam_where"></include><!--  -->
+		<if test="startPage!=null and pageSize!=null">
+			LIMIT #{startPage},#{pageSize}</if>
+		
+	</select>
+	<!-- 统计数量 -->
+	<select id="count" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM EXAM
+		WHERE 1=1
+		<include refid="query_exam_where"></include><!--  -->
+	</select>
+	<!--  -->
+	<!-- 插入 -->
+	<insert id="insert" parameterType="shg.examsys.entity.Exam">
+		INSERT INTO EXAM
+		(ID,EXAMNAME,STARTTIME,ENDTIME)
+		VALUES
+		(	#{id,jdbcType=BIGINT},
+			#{examName,jdbcType=VARCHAR},
+			#{startTime,jdbcType=DATE},
+			#{endTime,jdbcType=DATE}
+					
+		)
+	</insert>
+	<!-- 修改 -->
+	<update id="update" parameterType="shg.examsys.entity.Exam">
+		UPDATE EXAM
+		<set>
+			<if test="name!=null">EXAMNAME=#{examName,jdbcType=VARCHAR},</if>
+			<if test="startTime!=null">STARTTIME=#{startTime,jdbcType=DATE},</if>
+			<if test="endTime!=null">ENDTIME=#{endTime,jdbcType=DATE}</if>
+		
+		</set>
+		WHERE ID=#{id}
+	
+	</update>
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="long"> 
+		DELETE FROM EXAM
+		WHERE ID=#{id}
+	
+	</delete>
+	<!-- 删除多条（一维字符串数组的形式） -->
+	<delete id="delete" parameterType="long">
+		DELETE FROM EXAM
+		WHERE ID IN
+		<foreach collection="array" item="ID" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	
+	</delete>
+	
+
+</mapper>
+
+
+
+
+
+
