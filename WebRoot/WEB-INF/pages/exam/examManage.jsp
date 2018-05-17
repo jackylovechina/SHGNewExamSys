@@ -23,7 +23,7 @@
 	 	<a href="${pageContext.request.contextPath }/exam/examImport.action">新增考试</a>
 	 	</div>
 	 	<div class="left-title">
-	 	<a >管理考试</a>
+	 	<a href="${pageContext.request.contextPath }/exam/examView.action">管理考试</a>
 	 	</div>
 	 	</div>
 	 	<div id="right">
