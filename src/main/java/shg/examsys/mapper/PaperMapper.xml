@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shg.examsys.mapper.PaperMapper">
+	<!-- resultMap映射 -->
+	<resultMap type="shg.examsys.entity.Paper" id="paperRM">
+		<!-- 主键 -->
+		<id property="id" column="ID" jdbcType="BIGINT"/>
+		<!-- 一般属性 -->
+		<result property="exam_id" column="Exam_ID" jdbcType="BIGINT"/>
+		<result property="name" column="Name" />
+		<result property="totalScore" column="TotalScore" jdbcType="FLOAT"/>
+		<result property="singleChoiceCount" column="SingleChoiceCount" />
+		<result property="multiChoiceCount" column="MultiChoiceCount" />
+		<result property="blankCount" column="BlankCount" />
+		<result property="judgeCount" column="JudgeCount" />
+		<result property="descriptionCount" column="DescriptionCount" />
+		<result property="singleChoiceValue" column="SingleChoiceValue" />
+		<result property="multiChoiceValue" column="MultiChoiceValue" />
+		<result property="blankValue" column="BlankValue" />
+		<result property="judgeValue" column="JudgeValue" />
+		<result property="descriptionValue" column="DescriptionValue" />
+	</resultMap>
+	<!-- 查询一个数据 -->
+	<select id="get" parameterType="long" resultMap="paperRM">
+		SELECT * FROM PAPER 
+		WHERE ID=#{id}
+	</select>
+	<!-- SQL片段 -->
+	<sql id="query_paper_where">
+		<if test="name!=null">and NAME like #{name}</if>
+		<if test="exam_id!=null">and EXAM_ID = #{exam_id}</if>
+	</sql>
+	<!-- 查询 -->
+	<select id="find" parameterType="java.util.HashMap" resultMap="paperRM">
+		SELECT * FROM PAPER
+		WHERE 1=1
+		<include refid="query_paper_where"></include><!--  -->
+		<if test="startPage!=null and pageSize!=null">
+			LIMIT #{startPage},#{pageSize}</if>
+		
+	</select>
+	<!-- 统计数量 -->
+	<select id="count" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM PAPER
+		WHERE 1=1
+		<include refid="query_paper_where"></include><!--  -->
+	</select>
+	<!--  -->
+	<!-- 插入 -->
+	<insert id="insert" parameterType="shg.examsys.entity.Paper">
+		INSERT INTO PAPER
+		(ID,EXAM_ID,NAME,TOTALSCORE,SINGLECHOICECOUNT,MULTICHOICECOUNT,BLANKCOUNT,JUDGECOUNT,
+		DESCRIPTIONCOUNT,SINGLECHOICEVALUE,MULTICHOICEVALUE,BLANKVALUE,JUDGEVALUE,DESCRIPTIONVALUE)
+		VALUES
+		(	#{id,jdbcType=BIGINT},
+		(	#{exam_id,jdbcType=BIGINT},
+			#{name,jdbcType=VARCHAR},
+			#{totalScore,jdbcType=FLOAT},
+			#{singleChoiceCount,jdbcType=INTEGER},
+			#{multiChoiceCount,jdbcType=INTEGER},
+			#{blankCount,jdbcType=INTEGER},
+			#{judgeCount,jdbcType=INTEGER},
+			#{decriptionCount,jdbcType=INTEGER},
+			#{singleChoiceValue,jdbcType=FLOAT},
+			#{multiChoiceValue,jdbcType=FLOAT},
+			#{blankValue,jdbcType=FLOAT},
+			#{judgeValue,jdbcType=FLOAT},
+			#{descriptionValue,jdbcType=FLOAT}
+		)
+	</insert>
+	<!-- 修改 -->
+	<update id="update" parameterType="shg.examsys.entity.Paper">
+		UPDATE PAPER
+		<set>
+			<if test="name!=null">NAME=#{name,jdbcType=VARCHAR},</if>
+			<if test="totalScore!=null">TOTALSCORE=#{totalScore,jdbcType=VARCHAR},</if>
+			<if test="singleChoiceCount!=null">SINGLECHOICECOUNT=#{singleChoiceCount,jdbcType=INTEGER},</if>
+			<if test="multiChoiceCount!=null">MULTICHOICECOUNT=#{multiChoiceCount,jdbcType=INTEGER},</if>
+			<if test="blankCount!=null">BLANKCOUNT=#{blankCount,jdbcType=INTEGER}</if>
+			<if test="judgeCount!=null">JUDGECOUNT=#{judgeCount,jdbcType=INTEGER}</if>
+			<if test="descriptionCount!=null">DESCRIPTIONCOUNT=#{descriptionCount,jdbcType=INTEGER}</if>
+			<if test="singleChoiceValue!=null">SINGLECHOICEVALUE=#{singleChoiceValue,jdbcType=FLOAT}</if>
+			<if test="multiChoiceValue!=null">MULTICHOICEVALUE=#{multiChoiceValue,jdbcType=FLOAT}</if>
+			<if test="blankValue!=null">BLANKVALUE=#{blankValue,jdbcType=FLOAT}</if>
+			<if test="judgeValue!=null">JUDGEVALUE=#{judgeValue,jdbcType=FLOAT}</if>
+			<if test="descriptionValue!=null">DESCRIPTIONVALUE=#{descriptionValue,jdbcType=FLOAT}</if>
+		</set>
+		WHERE ID=#{id}
+	
+	</update>
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="long"> 
+		DELETE FROM PAPER
+		WHERE ID=#{id}
+	
+	</delete>
+	<!-- 删除多条（一维字符串数组的形式） -->
+	<delete id="delete" parameterType="long">
+		DELETE FROM PAPER
+		WHERE ID IN
+		<foreach collection="array" item="retailerID" open="(" close=")" separator=",">
+			#{id}
+		</foreach>
+	
+	</delete>
+	
+
+</mapper>
+
+
+
+
+
+
