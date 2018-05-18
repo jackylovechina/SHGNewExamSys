@@ -25,6 +25,9 @@
 	 	<div class="left-title">
 	 	<a href="${pageContext.request.contextPath }/exam/examView.action">管理考试</a>
 	 	</div>
+	 	<div class="left-title">
+	 	<a href="${pageContext.request.contextPath }/paper/paperManage.action">试卷管理</a>
+	 	</div>
 	 	</div>
 	 	<div id="right">
 	 		<%-- <%@ include file="import.jsp" %> --%>

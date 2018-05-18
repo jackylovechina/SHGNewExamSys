@@ -16,7 +16,6 @@
 	<div id="menu">
 	<%@ include file="../menu.jsp" %>
 	</div>
-	
 	 <div id="wrap">
 	 	<div id="left">
 	 	<div class="left-title">
@@ -25,12 +24,18 @@
 	 	<div class="left-title">
 	 	<a href="${pageContext.request.contextPath }/exam/examView.action">管理考试</a>
 	 	</div>
+	 	<div class="left-title">
+	 	<a href="${pageContext.request.contextPath }/paper/paperManage.action">试卷管理</a>
+	 	</div>
 	 	</div>
 	 	<div id="right">
 	 		<%-- <%@ include file="import.jsp" %> --%>
 	 		<c:if test="${Info!=null }">
 	 		 <font>${Info }</font> 
 	 		</c:if>
+	 		<div><p><b>新增考试</b></p>
+	 		<hr style="margin-top: 10px;" />
+	 		</div>
 	 		<div>
 	 		<form action="importExam.action">
 	 		<table >

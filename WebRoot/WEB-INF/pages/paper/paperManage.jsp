@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html >
 <html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -20,18 +20,20 @@
 	 <div id="wrap">
 	 	<div id="left">
 	 	<div class="left-title">
-	 	<a href="${pageContext.request.contextPath }/question/questionManage.action">试题导入</a>
+	 	<a href="${pageContext.request.contextPath }/exam/examImport.action">新增考试</a>
 	 	</div>
 	 	<div class="left-title">
-	 	<a href="${pageContext.request.contextPath }/question/questionView.action">试题查看</a>
+	 	<a href="${pageContext.request.contextPath }/exam/examView.action">管理考试</a>
+	 	</div>
+	 	<div class="left-title">
+	 	<a href="${pageContext.request.contextPath }/paper/paperManage.action">试卷管理</a>
 	 	</div>
 	 	</div>
 	 	<div id="right">
-	 		<div><p><b>导入题库</b></p>
-	 		<hr style="margin-top: 10px;" />
-	 		</div>
-	 		<%@ include file="import.jsp" %>
-	 	
+	 		<%-- <%@ include file="import.jsp" %> --%>
+	 	<div><p><b>试卷管理</b></p>
+			<hr style="margin-top: 10px;" />
+			</div>
 	 	</div>
 	 
 	 </div>

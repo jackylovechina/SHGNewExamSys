@@ -151,6 +151,9 @@
 			</div>
 		</div>
 		<div id="right">
+			<div><p><b>管理题库</b></p>
+	 		<hr style="margin-top: 10px;" />
+	 		</div>
 			<div class="mask">
 				<div class="c">
 					<div
