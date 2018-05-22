@@ -26,7 +26,10 @@
 	 	<a href="${pageContext.request.contextPath }/exam/examView.action">管理考试</a>
 	 	</div>
 	 	<div class="left-title">
-	 	<a href="${pageContext.request.contextPath }/paper/paperManage.action">试卷管理</a>
+	 	<a href="${pageContext.request.contextPath }/paper/paperManage.action">添加试卷</a>
+	 	</div>
+	 	<div class="left-title">
+	 		<a>管理试卷</a>
 	 	</div>
 	 	</div>
 	 	<div id="right">
