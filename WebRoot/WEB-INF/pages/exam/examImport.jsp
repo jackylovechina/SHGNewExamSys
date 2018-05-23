@@ -41,13 +41,6 @@
 			<div class="left-title">
 				<a href="${pageContext.request.contextPath }/exam/examView.action">管理考试</a>
 			</div>
-			<div class="left-title">
-				<a
-					href="${pageContext.request.contextPath }/paper/paperManage.action">添加试卷</a>
-			</div>
-			<div class="left-title">
-				<a>管理试卷</a>
-			</div>
 		</div>
 		<div id="right">
 			<%-- <%@ include file="import.jsp" %> --%>
@@ -64,7 +57,8 @@
 				<form action="importExam.action" onsubmit="return checkAdd()">
 					<table>
 						<tr>
-							<td>考试开始日期：<input type="date" name="startTime" id="startTime"></td>
+							<td>考试开始日期：<input type="date" name="startTime"
+									id="startTime"></td>
 							<td>考试结束日期：<input type="date" name="endTime" id="endTime"></td>
 						</tr>
 						<tr>
@@ -76,11 +70,7 @@
 				</form>
 
 			</div>
-
 		</div>
-
 	</div>
-
-
 </body>
 </html>

@@ -1,6 +1,6 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<!DOCTYPE html>
+<!DOCTYPE html >
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -18,6 +18,7 @@
 			"共<font color='blue'>" + sumPage + "</font>页," +
 			"当前第<font color='blue'>" + currentPage + "</font>页";
 		document.getElementById("pageInfo").innerHTML = info;
+
 	}
 	function toPrePage() {
 		var currentPageObject = document.getElementById("currentPage");
@@ -72,31 +73,6 @@
 			}
 		}
 	}
-	function editExam(id) {
-		var message = "{'id':'" + id + "'}";
-		$.ajax({
-			type : "post",
-			url : "${pageContext.request.contextPath}/exam/editExam.action",
-			contentType : 'application/json;charset=utf-8',
-			data : message, //数据格式是JSON串
-			success : function(data) { //返回JSON结果
-				$("#editExamName").val(data["examName"]);
-				$("#editStartTime").val(data["startTime"].substring(0,10));
-				$("#editEndTime").val(data["endTime"].substring(0,10));
-				$("#Id").val(data["id"]);
-				//显示弹出框
-				$(".mask").css("display", "block");
-				//引入分页信息至form表单
-				$("#eStartPage").val($("#startPage").val());
-				$("#eCurrentPage").val($("#currentPage").val());
-				$("#ePageSize").val($("#pageSize").val());
-			}
-		});
-
-	}
-	function cancelEdit() {
-		$(".mask").css("display", "none");
-	}
 </script>
 </head>
 
@@ -104,37 +80,39 @@
 	<div id="menu">
 		<%@ include file="../menu.jsp"%>
 	</div>
-	
+
 	<div id="wrap">
 		<div id="left">
 			<div class="left-title">
-				<a href="${pageContext.request.contextPath }/exam/examImport.action">新增考试</a>
+				<a
+					href="${pageContext.request.contextPath}/paper/paperManage.action">添加试卷</a>
 			</div>
 			<div class="left-title">
-				<a href="${pageContext.request.contextPath }/exam/examView.action">管理考试</a>
+				<a
+					href="${pageContext.request.contextPath }/paper/prePaperView.action">管理试卷</a>
 			</div>
 		</div>
 		<div id="right">
 			<%-- <%@ include file="import.jsp" %> --%>
-			<c:if test="${Info!=null }">
-				<font>${Info }</font>
-			</c:if>
-			<div><p><b>管理考试</b></p>
-			<hr style="margin-top: 10px;" />
-			</div>
 			<div>
-				<form id="listForm" action="examView.action" method="post">
-					考试名称：
-					<input type="text" name="examName">
-					<input type="submit" value="搜索"
-						style="background-color: #173e65;color: #FFFFFF;width: 70px;" />
-					<br>
-					<!-- 显示错误消息 -->
-					<c:if test="${errorMsg }">
-						<font color="red">${errorMsg }</font>
-						<br />
-					</c:if>
+				<p>
+					<b>管理试卷</b>
+				</p>
+				<hr style="margin-top: 10px;" />
+			</div>
 
+			<div>
+				<form action="paperView.action" method="post">
+					所属考试：
+					<select name="exam_id">
+						<c:if test="${examList!=null }">
+							<c:forEach items="${examList }" var="exam" varStatus="status">
+								<option value="${exam.id }"
+									<c:if test="${exam.id == old_exam_id }">selected</c:if>>${exam.examName }</option>
+							</c:forEach>
+						</c:if>
+					</select>
+					<input type="submit" value="查询试卷">
 					<input type="hidden" name="startPage" id="startPage"
 						value="${startPage }" />
 					<input type="hidden" name="currentPage" id="currentPage"
@@ -145,59 +123,49 @@
 						value="${sumPageNumber }" />
 					<input type="hidden" name="countNumber" id="countNumber"
 						value="${countNumber }" />
+
 				</form>
 			</div>
-			<div class="mask">
-				<div class="c">
-					<div
-						style="background-color: #173e65;height: 20px;color: #fff;font-size: 12px;padding-left: 7px;">
-						修改信息<font style="float: right;padding-right: 10px;" onclick="cancelEdit()">X</font>
-					</div>
-					<form id="editForm" action="edit.action" method="post">
-						<br>
-						考试名称：
-						<input type="text" id="editExamName" name="examName" >
-						<br><br>
-						开始日期：
-						<input type="date" id="editStartTime" name="startTime" >
-						<br />
-						截止日期：
-						<input type="date" id="editEndTime" name="endTime" >
-						<br />
-						
-						<input type="hidden" name="id" id="Id" />
-						<input type="hidden" name="startPage" id="eStartPage" />
-						<input type="hidden" name="currentPage" id="eCurrentPage" />
-						<input type="hidden" name="pageSize" id="ePageSize" />
-						<input type="submit" value="提交"
-							style="background-color: #173e65;color: #FFFFFF;width: 70px;" />
-					</form>
-				</div>
-			</div>
 
-			<div>
-				<hr style="margin-top: 10px;" />
+			<div id="paperList">
 				<c:if test="${list!=null }">
-					<table style="margin-top: 10px;width: 700px;text-align: center;"
+					<table style="margin-top: 10px;width: 1000px;text-align: center;"
 						border="1">
-						<tr class="question-title">
+						<tr>
 							<td>序号</td>
-							<td>考试名称</td>
-							<td>起始日期</td>
-							<td>截止日期</td>
+							<td>试卷名称</td>
+							<td>总分</td>
+							<td>单选题数量</td>
+							<td>单选题分值</td>
+							<td>多选题数量</td>
+							<td>多选题分值</td>
+							<td>填空题数量</td>
+							<td>填空题分值</td>
+							<td>判断题数量</td>
+							<td>判断题分值</td>
+							<td>简答题数量</td>
+							<td>简答题分值</td>
 							<td>操作</td>
 						</tr>
 						<c:forEach items="${list }" var="item" varStatus="status">
 							<tr>
 								<td>${status.index+1 }</td>
-								<td style="width: 250px">${item.examName }</td>
-								<td>${item.startTime }</td>
-								<td>${item.endTime }</td>
-								<td class="question-deal"><a
-										onclick="editExam('${item.id}')">编辑</a>| <a
-										onclick="deleteExam('${item.id}','${item.examName }')">删除</a>
+								<td>${item.name }</td>
+								<td>${item.totalScore }</td>
+								<td>${item.singleChoiceCount }</td>
+								<td>${item.singleChoiceValue }</td>
+								<td>${item.multiChoiceCount }</td>
+								<td>${item.multiChoiceValue }</td>
+								<td>${item.blankCount }</td>
+								<td>${item.blankValue }</td>
+								<td>${item.judgeCount }</td>
+								<td>${item.judgeValue }</td>
+								<td>${item.descriptionCount }</td>
+								<td>${item.descriptionValue }</td>
+								<td><a onclick="editPaper('${item.id}')">编辑</a>|<a
+										onclick="deletePaper('${item.id}','${item.name }')">删除</a>
 									<form id="deleteForm" action="delete.action" method="post">
-										<input type="hidden" name="id" id="dId" />
+										<input type="text" name="id" id="dId" />
 										<input type="hidden" name="startPage" id="dStartPage" />
 										<input type="hidden" name="currentPage" id="dCurrentPage" />
 										<input type="hidden" name="pageSize" id="dPageSize" />
@@ -209,13 +177,13 @@
 				<c:if test="${list==null }">
 					<b>搜索结果为空！</b>
 				</c:if>
-			</div>
-			<div style="margin-top: 10px;">
-				<a onclick="toPrePage()">上一页</a>
-				<a onclick="toNextPage()">下一页</a>
-				<input type="text" id="pageNumber" style="width: 50px;"></input>
-				<button onclick="toLocationPage()">Go</button>
-				<dir id="pageInfo"></dir>
+				<div style="margin-top: 10px;">
+					<a onclick="toPrePage()">上一页</a>
+					<a onclick="toNextPage()">下一页</a>
+					<input type="text" id="pageNumber" style="width: 50px;">
+					<button onclick="toLocationPage()">Go</button>
+					<p id="pageInfo"></p>
+				</div>
 			</div>
 		</div>
 	</div>

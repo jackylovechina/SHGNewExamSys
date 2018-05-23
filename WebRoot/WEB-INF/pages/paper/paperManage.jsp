@@ -21,11 +21,11 @@
 		var judgeValue = $("#judgeValue").val();
 		var descriptionCount = $("#descriptionCount").val();
 		var descriptionValue = $("#descriptionValue").val();
-		var sumScore = Number(singleChoiceCount)*Number(singleChoiceValue) 
-			+ Number(multiChoiceCount)*Number(multiChoiceValue)
-			+ Number(blankCount)*Number(blankValue)
-			+ Number(judgeCount)*Number(judgeValue)
-			+ Number(descriptionCount)*Number(descriptionValue);
+		var sumScore = Number(singleChoiceCount) * Number(singleChoiceValue)
+			+ Number(multiChoiceCount) * Number(multiChoiceValue)
+			+ Number(blankCount) * Number(blankValue)
+			+ Number(judgeCount) * Number(judgeValue)
+			+ Number(descriptionCount) * Number(descriptionValue);
 		$("#totalScore").val(sumScore);
 
 	}
@@ -92,17 +92,10 @@
 	<div id="wrap">
 		<div id="left">
 			<div class="left-title">
-				<a href="${pageContext.request.contextPath }/exam/examImport.action">新增考试</a>
+				<a href="${pageContext.request.contextPath}/paper/paperManage.action">添加试卷</a>
 			</div>
 			<div class="left-title">
-				<a href="${pageContext.request.contextPath }/exam/examView.action">管理考试</a>
-			</div>
-			<div class="left-title">
-				<a
-					href="${pageContext.request.contextPath }/paper/paperManage.action">添加试卷</a>
-			</div>
-			<div class="left-title">
-				<a>管理试卷</a>
+				<a href="${pageContext.request.contextPath }/paper/prePaperView.action">管理试卷</a>
 			</div>
 		</div>
 		<div id="right">
@@ -136,28 +129,34 @@
 						</tr>
 						<tr>
 							<td>单项选择题</td>
-							<td><input name="" type="number" id="singleChoiceCount"></td>
-							<td><input name="" type="number" id="singleChoiceValue"></td>
+							<td><input name="singleChoiceCount" type="number"
+									id="singleChoiceCount"></td>
+							<td><input name="singleChoiceValue" type="number"
+									id="singleChoiceValue"></td>
 						</tr>
 						<tr>
 							<td>多项选择题</td>
-							<td><input name="" type="number" id="multiChoiceCount"></td>
-							<td><input name="" type="number" id="multiChoiceValue"></td>
+							<td><input name="multiChoiceCount" type="number"
+									id="multiChoiceCount"></td>
+							<td><input name="multiChoiceValue" type="number"
+									id="multiChoiceValue"></td>
 						</tr>
 						<tr>
 							<td>填空题</td>
-							<td><input name="" type="number" id="blankCount"></td>
-							<td><input name="" type="number" id="blankValue"></td>
+							<td><input name="blankCount" type="number" id="blankCount"></td>
+							<td><input name="blankValue" type="number" id="blankValue"></td>
 						</tr>
 						<tr>
 							<td>判断题</td>
-							<td><input name="" type="number" id="judgeCount"></td>
-							<td><input name="" type="number" id="judgeValue"></td>
+							<td><input name="judgeCount" type="number" id="judgeCount"></td>
+							<td><input name="judgeValue" type="number" id="judgeValue"></td>
 						</tr>
 						<tr>
 							<td>简答题</td>
-							<td><input name="" type="number" id="descriptionCount"></td>
-							<td><input name="" type="number" id="descriptionValue"></td>
+							<td><input name="descriptionCount" type="number"
+									id="descriptionCount"></td>
+							<td><input name="descriptionValue" type="number"
+									id="descriptionValue"></td>
 						</tr>
 					</table>
 					<p style="color: red;">提示：填写完成点击空白处即可出现总分计算结果！</p>
@@ -167,6 +166,9 @@
 					<input type="submit"
 						style="width: 150px;margin-left: 170px;background-color: #66ffcc">
 				</form>
+				<c:if test="${addInfo!=null }">
+					<p style="color: red;">${addInfo}</p>
+				</c:if>
 				<hr style="margin-top: 10px;" />
 				<hr style="margin-top: 10px;" />
 			</div>

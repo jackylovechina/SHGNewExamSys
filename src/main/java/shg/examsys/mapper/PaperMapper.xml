@@ -55,14 +55,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DESCRIPTIONCOUNT,SINGLECHOICEVALUE,MULTICHOICEVALUE,BLANKVALUE,JUDGEVALUE,DESCRIPTIONVALUE)
 		VALUES
 		(	#{id,jdbcType=BIGINT},
-		(	#{exam_id,jdbcType=BIGINT},
+			#{exam_id,jdbcType=BIGINT},
 			#{name,jdbcType=VARCHAR},
 			#{totalScore,jdbcType=FLOAT},
 			#{singleChoiceCount,jdbcType=INTEGER},
 			#{multiChoiceCount,jdbcType=INTEGER},
 			#{blankCount,jdbcType=INTEGER},
 			#{judgeCount,jdbcType=INTEGER},
-			#{decriptionCount,jdbcType=INTEGER},
+			#{descriptionCount,jdbcType=INTEGER},
 			#{singleChoiceValue,jdbcType=FLOAT},
 			#{multiChoiceValue,jdbcType=FLOAT},
 			#{blankValue,jdbcType=FLOAT},
