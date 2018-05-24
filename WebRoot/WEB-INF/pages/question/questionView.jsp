@@ -108,7 +108,7 @@
 	}
 
 	function deleteQuestion(id, name) {
-		if (window.confirm("你确定要删除 :" + name + id + "吗?")) {
+		if (window.confirm("你确定要删除 :" + name +  "吗?")) {
 			var message = "{'id':'" + id + "'}";
 			$.ajax({
 				type : "post",

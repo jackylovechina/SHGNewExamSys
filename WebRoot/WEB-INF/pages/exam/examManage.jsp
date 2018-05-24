@@ -4,7 +4,7 @@
 <html >
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>试题管理</title>
+<title>考试管理</title>
 <link href ="${pageContext.request.contextPath }/css/regcss.css" 
 	type="text/css" rel="stylesheet"/>
 <script type="text/javascript" 

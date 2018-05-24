@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>试题管理</title>
+<title>试卷管理</title>
 <link href="${pageContext.request.contextPath }/css/regcss.css"
 	type="text/css" rel="stylesheet" />
 <script type="text/javascript"
@@ -73,6 +73,23 @@
 			}
 		}
 	}
+	function deletePaper(id, name) {
+		if (window.confirm("你确定要删除 :" + name + "吗?\n删除试卷同时会删除其相关联数据信息！")) {
+			var message = "{'id':'" + id + "'}";
+			$.ajax({
+				type : "post",
+				url : "${pageContext.request.contextPath}/paper/delete.action",
+				contentType : 'application/json;charset=utf-8',
+				data : message, //数据格式是JSON串
+				success : function(data) { //返回JSON结果
+					$("#dStartPage").val($("#startPage").val());
+					$("#dCurrentPage").val($("#currentPage").val());
+					$("#dPageSize").val($("#pageSize").val());
+					$("#listForm").submit(); //提交表单
+				}
+			});
+		}
+	}
 </script>
 </head>
 
@@ -88,8 +105,7 @@
 					href="${pageContext.request.contextPath}/paper/paperManage.action">添加试卷</a>
 			</div>
 			<div class="left-title">
-				<a
-					href="${pageContext.request.contextPath }/paper/prePaperView.action">管理试卷</a>
+				<a href="${pageContext.request.contextPath }/paper/paperView.action">管理试卷</a>
 			</div>
 		</div>
 		<div id="right">
@@ -102,9 +118,10 @@
 			</div>
 
 			<div>
-				<form action="paperView.action" method="post">
+				<form action="paperView.action" method="post" id="listForm">
 					所属考试：
 					<select name="exam_id">
+						<option></option>
 						<c:if test="${examList!=null }">
 							<c:forEach items="${examList }" var="exam" varStatus="status">
 								<option value="${exam.id }"
@@ -162,10 +179,11 @@
 								<td>${item.judgeValue }</td>
 								<td>${item.descriptionCount }</td>
 								<td>${item.descriptionValue }</td>
-								<td><a onclick="editPaper('${item.id}')">编辑</a>|<a
+								<td class="question-deal"><a
+										onclick="makePaper('${item.id}')">生成</a>| <a
 										onclick="deletePaper('${item.id}','${item.name }')">删除</a>
 									<form id="deleteForm" action="delete.action" method="post">
-										<input type="text" name="id" id="dId" />
+										<input type="hidden" name="id" id="dId" />
 										<input type="hidden" name="startPage" id="dStartPage" />
 										<input type="hidden" name="currentPage" id="dCurrentPage" />
 										<input type="hidden" name="pageSize" id="dPageSize" />

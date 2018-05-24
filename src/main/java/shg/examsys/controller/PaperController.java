@@ -7,7 +7,10 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.alibaba.fastjson.JSONObject;
 
 import shg.examsys.entity.Exam;
 import shg.examsys.entity.Paper;
@@ -37,7 +40,7 @@ public class PaperController {
 		List<Exam> examList = examService.find(null);
 		model.addAttribute("examList", examList);
 		return "/paper/prePaperView.jsp";
-   
+
 	}
 
 	@RequestMapping("/paper/paperView.action")
@@ -97,6 +100,19 @@ public class PaperController {
 		model.addAttribute("addInfo", "添加试卷成功！");
 
 		return paperManage(model, paper);
+
+	}
+
+	@RequestMapping("/paper/delete.action")
+	public String delete(Model model, Paper paper, @RequestBody String json) {
+		long id = JSONObject.parseObject(json).getLongValue("id");
+		paperService.deleteById(id);
+
+		Paper queryPaper = new Paper();
+		queryPaper.setStartPage(paper.getStartPage());
+		queryPaper.setCurrentPage(paper.getCurrentPage());
+		queryPaper.setPageSize(paper.getPageSize());
+		return paperView(model, queryPaper, paper.getExam_id());
 
 	}
 

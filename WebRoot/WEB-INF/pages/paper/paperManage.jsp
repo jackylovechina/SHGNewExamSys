@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>试题管理</title>
+<title>试卷管理</title>
 <link href="${pageContext.request.contextPath }/css/regcss.css"
 	type="text/css" rel="stylesheet" />
 <script type="text/javascript"
@@ -95,7 +95,7 @@
 				<a href="${pageContext.request.contextPath}/paper/paperManage.action">添加试卷</a>
 			</div>
 			<div class="left-title">
-				<a href="${pageContext.request.contextPath }/paper/prePaperView.action">管理试卷</a>
+				<a href="${pageContext.request.contextPath }/paper/paperView.action">管理试卷</a>
 			</div>
 		</div>
 		<div id="right">

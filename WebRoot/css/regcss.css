@@ -59,7 +59,7 @@ a:hover {
 	margin-left: 10px;
 }
 
-.question-title, .question-deal {
+.question-title, .question-deal ,.deal{
 	/*设置表格文字在一行显示*/
 	text-overflow: ellipsis;
 	word-break: keep-all;
