@@ -178,7 +178,8 @@ public class PaperController {
 			model.addAttribute("createInfo", "试卷自动生成成功！");
 		}
 		return paperView(model, paper, null);
-
+   
+		
 	}
 
 	private List<Question> getRandomList(List<Question> paramList, int count) {
