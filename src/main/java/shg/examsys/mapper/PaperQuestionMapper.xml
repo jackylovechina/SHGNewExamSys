@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="shg.examsys.mapper.PaperQuestionMapper">
+	<!-- resultMap映射 -->
+	<resultMap type="shg.examsys.entity.PaperQuestion" id="paperQuestionRM">
+		<!-- 主键 -->
+		<id property="id" column="ID" jdbcType="BIGINT" />
+		<!-- 一般属性 -->
+		<result property="pap_id" column="Pap_ID" />
+		<result property="que_id" column="Que_ID" />
+		<result property="value" column="Value" />
+		<association property="paper" javaType="shg.examsys.entity.Paper">
+			<!-- 主键 -->
+			<id property="id" column="ID" jdbcType="BIGINT" />
+			<!-- 一般属性 -->
+			<result property="exam_id" column="Exam_ID" jdbcType="BIGINT" />
+			<result property="name" column="Name" />
+			<result property="totalScore" column="TotalScore" jdbcType="FLOAT" />
+			<result property="singleChoiceCount" column="SingleChoiceCount" />
+			<result property="multiChoiceCount" column="MultiChoiceCount" />
+			<result property="blankCount" column="BlankCount" />
+			<result property="judgeCount" column="JudgeCount" />
+			<result property="descriptionCount" column="DescriptionCount" />
+			<result property="singleChoiceValue" column="SingleChoiceValue" />
+			<result property="multiChoiceValue" column="MultiChoiceValue" />
+			<result property="blankValue" column="BlankValue" />
+			<result property="judgeValue" column="JudgeValue" />
+			<result property="descriptionValue" column="DescriptionValue" />
+		</association>
+		<association property="question" javaType="shg.examsys.entity.Question">
+			<!-- 主键 -->
+			<id property="id" column="ID" jdbcType="BIGINT" />
+			<!-- 一般属性 -->
+			<result property="conType_id" column="ConType_ID" />
+			<result property="queType_id" column="QueType_ID" />
+			<result property="questionContent" column="QuestionContent" />
+			<result property="choiceA" column="ChoiceA" />
+			<result property="choiceB" column="ChoiceB" />
+			<result property="choiceC" column="ChoiceC" />
+			<result property="choiceD" column="ChoiceD" />
+			<result property="standardAnswer" column="StandardAnswer" />
+			<result property="orderly" column="Orderly" />
+		</association>
+	</resultMap>
+
+	<!-- 查询一个数据 -->
+	<select id="get" parameterType="long" resultMap="paperQuestionRM">
+		SELECT * FROM
+		PAPER_QUESTION,PAPER,QUESTION
+		WHERE PAPER_QUESTION.PAP_ID=#{paper_id}
+	</select>
+	<!-- SQL片段 -->
+	<sql id="query_pq_where">
+		<if test="id!=null">and ID = #{id}</if>
+		<if test="pap_id!=null">and PAP_ID = #{pap_id}</if>
+		<if test="que_id!=null">and QUE_ID = #{que_id}</if>
+	</sql>
+	<!-- 查询 -->
+	<select id="find" parameterType="java.util.HashMap" resultMap="paperQuestionRM">
+		SELECT * FROM PAPER_QUESTION
+		WHERE 1=1
+		<include refid="query_pq_where"></include><!-- -->
+
+	</select>
+	<!-- 统计数量 -->
+	<select id="count" parameterType="java.util.HashMap" resultType="java.lang.Integer">
+		SELECT COUNT(*) FROM PAPER_QUESTION
+		WHERE 1=1
+		<include refid="query_pq_where"></include><!-- -->
+	</select>
+	<!-- -->
+	<!-- 插入 -->
+	<insert id="insert" parameterType="shg.examsys.entity.PaperQuestion">
+		INSERT INTO PAPER_QUESTION
+		(PAP_ID,QUE_ID,VALUE)
+		VALUES
+		(
+		#{pap_id,jdbcType=BIGINT},
+		#{que_id,jdbcType=BIGINT},
+		#{value,jdbcType=FLOAT}
+		)
+	</insert>
+	<insert id="insertMulti" parameterType="shg.examsys.entity.PaperQuestion">
+		INSERT INTO PAPER_QUESTION
+		(PAP_ID,QUE_ID,VALUE)
+		VALUES
+		<foreach collection="list" item="item" separator="," index="index">
+			(#{item.pap_id},#{item.que_id},#{item.value})
+		</foreach>
+	</insert>
+	<!-- 修改 -->
+	<update id="update" parameterType="shg.examsys.entity.PaperQuestion">
+		UPDATE PAPER_QUESTION
+		<set>
+			<if test="que_id!=null">QUE_ID=#{que_id,jdbcType=BIGINT},</if>
+			<if test="pap_id!=null">PAP_ID=#{pap_id,jdbcType=BIGINT}</if>
+		</set>
+		WHERE ID=#{id}
+
+	</update>
+	<!-- 删除一条 -->
+	<delete id="deleteById" parameterType="long">
+		DELETE FROM PAPER_QUESTION
+		WHERE
+		WHERE ID=#{id}
+
+	</delete>
+	<!-- 删除多条（一维字符串数组的形式） -->
+	<delete id="delete" parameterType="long">
+		DELETE FROM PAPER_QUESTION
+		WHERE ID IN
+		<foreach collection="array" item="ID" open="(" close=")"
+			separator=",">
+			#{id}
+		</foreach>
+
+	</delete>
+
+
+</mapper>
+
+
+
+
+
+
