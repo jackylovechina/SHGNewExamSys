@@ -90,6 +90,35 @@
 			});
 		}
 	}
+	function makePaper(id) {
+		var message = "{'id':'" + id + "'}";
+		$.ajax({
+			type : "post",
+			url : "${pageContext.request.contextPath}/paperQuestion/create.action",
+			contentType : 'application/json;charset=utf-8',
+			data : message, //数据格式是JSON串
+			success : function(data) { //返回JSON结果
+				$("#Id").val(data["id"]);
+				$("#paper_name").val(data["name"]);
+				$("#single_c").text(data["singleChoiceCount"]);
+				$("#single_v").text(data["singleChoiceValue"]);
+				$("#multi_c").text(data["multiChoiceCount"]);
+				$("#multi_v").text(data["multiChoiceValue"]);
+				$("#blank_c").text(data["blankCount"]);
+				$("#blank_v").text(data["blankValue"]);
+				$("#judge_c").text(data["judgeCount"]);
+				$("#judge_v").text(data["judgeValue"]);
+				$("#description_c").text(data["descriptionCount"]);
+				$("#description_v").text(data["descriptionValue"]);
+				$(".mask").css("display", "block");
+
+			}
+		});
+	}
+	function cancelEdit() {
+		$(".mask").css("display", "none");
+
+	}
 </script>
 </head>
 
@@ -142,6 +171,61 @@
 						value="${countNumber }" />
 
 				</form>
+			</div>
+			<div class="mask">
+				<div class="c-create">
+					<div
+						style="background-color: #173e65;height: 20px;color: #fff;font-size: 12px;padding-left: 7px;">
+						生成试卷
+						<a style="float: right;padding-right: 10px;"
+							onclick="cancelEdit()">X</a>
+					</div>
+
+					<form id="createForm" action="createPaper.action" method="post">
+						试题类型：
+						<select name="queType_id" id="queType_id">
+							<c:forEach items="${conTypeList }" var="conType"
+								varStatus="status">
+								<option value="${conType.id }">${conType.typeName }</option>
+							</c:forEach>
+						</select>
+						<br>
+						试卷名称：
+						<input id="paper_name" type="text" readonly="readonly">
+						<br>
+						<br>
+						<table border="1" style="margin-left: 30px;">
+							<tr>
+								<th></th>
+								<th>单选</th>
+								<th>多选</th>
+								<th>填空</th>
+								<th>判断</th>
+								<th>简答</th>
+							</tr>
+							<tr>
+								<td>数量</td>
+								<td id="single_c"></td>
+								<td id="multi_c"></td>
+								<td id="blank_c"></td>
+								<td id="judge_c"></td>
+								<td id="description_c"></td>
+							</tr>
+							<tr>
+								<td>分值</td>
+								<td id="single_v"></td>
+								<td id="multi_v"></td>
+								<td id="blank_v"></td>
+								<td id="judge_v"></td>
+								<td id="description_v"></td>
+							</tr>
+						</table>
+						<br>
+						<input type="hidden" name="pap_id" id="Id" />
+						<input type="submit" value="生成"
+							style="background-color: #173e65;color: #FFFFFF;width: 70px; margin-left: 150px;" />
+					</form>
+				</div>
 			</div>
 
 			<div id="paperList">
@@ -198,10 +282,13 @@
 				<div style="margin-top: 10px;">
 					<a onclick="toPrePage()">上一页</a>
 					<a onclick="toNextPage()">下一页</a>
-					<input type="text" id="pageNumber" style="width: 50px;">
-					<button onclick="toLocationPage()">Go</button>
 					<p id="pageInfo"></p>
 				</div>
+			</div>
+			<div>
+				<c:if test="${createInfo!=null }">
+					<b>${createInfo }</b>
+				</c:if>
 			</div>
 		</div>
 	</div>

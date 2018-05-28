@@ -298,8 +298,6 @@
 			<div style="margin-top: 10px;">
 				<a onclick="toPrePage()">上一页</a>
 				<a onclick="toNextPage()">下一页</a>
-				<input type="text" id="pageNumber" style="width: 50px;"></input>
-				<button onclick="toLocationPage()">Go</button>
 				<dir id="pageInfo"></dir>
 			</div>
 
