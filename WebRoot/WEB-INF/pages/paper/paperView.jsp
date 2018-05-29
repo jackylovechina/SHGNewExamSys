@@ -119,6 +119,10 @@
 		$(".mask").css("display", "none");
 
 	}
+	function getPaperDetail(pap_id) {
+		var url = "${pageContext.request.contextPath}/paperQuestion/getPaperDetail?pap_id=" + pap_id;
+		window.open(url, "试卷详情", "scrollbars=yes");
+	}
 </script>
 </head>
 
@@ -251,7 +255,7 @@
 						<c:forEach items="${list }" var="item" varStatus="status">
 							<tr>
 								<td>${status.index+1 }</td>
-								<td>${item.name }</td>
+								<td><a href="#" onclick="getPaperDetail('${item.id}')">${item.name }</a></td>
 								<td>${item.totalScore }</td>
 								<td>${item.singleChoiceCount }</td>
 								<td>${item.singleChoiceValue }</td>
