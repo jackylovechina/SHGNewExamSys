@@ -49,18 +49,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="get" parameterType="long" resultMap="paperQuestionRM">
 		SELECT * FROM
 		PAPER_QUESTION,PAPER,QUESTION
-		WHERE PAPER_QUESTION.PAP_ID=#{paper_id}
+		WHERE PAPER_QUESTION.PAP_ID=PAPER.ID AND
+		PAPER_QUESTION.QUE_ID=QUESTION.ID
+		AND PAPER_QUESTION.ID=#{id}
 	</select>
 	<!-- SQL片段 -->
 	<sql id="query_pq_where">
-		<if test="id!=null">and ID = #{id}</if>
-		<if test="pap_id!=null">and PAP_ID = #{pap_id}</if>
-		<if test="que_id!=null">and QUE_ID = #{que_id}</if>
+		<if test="id!=null">and PAPER_QUESTION.ID = #{id}</if>
+		<if test="pap_id!=null">and PAPER_QUESTION.PAP_ID = #{pap_id}</if>
+		<if test="que_id!=null">and PAPER_QUESTION.QUE_ID = #{que_id}</if>
 	</sql>
 	<!-- 查询 -->
 	<select id="find" parameterType="java.util.HashMap" resultMap="paperQuestionRM">
-		SELECT * FROM PAPER_QUESTION
-		WHERE 1=1
+		SELECT * FROM PAPER_QUESTION,PAPER,QUESTION
+		WHERE 1=1 AND
+		PAPER_QUESTION.PAP_ID=PAPER.ID AND PAPER_QUESTION.QUE_ID=QUESTION.ID
 		<include refid="query_pq_where"></include><!-- -->
 
 	</select>

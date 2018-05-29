@@ -187,7 +187,7 @@
 
 					<form id="createForm" action="createPaper.action" method="post">
 						试题类型：
-						<select name="queType_id" id="queType_id">
+						<select name="conType_id" id="conType_id">
 							<c:forEach items="${conTypeList }" var="conType"
 								varStatus="status">
 								<option value="${conType.id }">${conType.typeName }</option>

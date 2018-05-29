@@ -213,6 +213,7 @@ public class PaperController {
 		Map<String, Object> questionMap = new HashMap<String, Object>();
 		questionMap.put("queType_id", queType_id);
 		questionMap.put("conType_id", conType_id);
+		//System.out.println("666777888"+conType_id);
 		List<Question> QueList = questionService.find(questionMap);
 		// 生成随机新的试题list
 		List<Question> newQueList = getRandomList(QueList, count);
